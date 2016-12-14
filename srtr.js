@@ -22,6 +22,7 @@ const Srtr = function() {};
  *
  * @private
  * @see https://en.wikipedia.org/wiki/Three-way_comparison
+ * @see https://en.wikipedia.org/wiki/%3F:
  * @param {number} value - Current value in collection.
  * @param {number} comparison - Comparison value in collection.
  * @return {number} - Next value subtracted from current.
@@ -70,6 +71,10 @@ Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
  */
 
 Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
+    if (collection.length < 2) {
+        return collection;
+    }
+
     collection = collection.slice();
 
     for (let index = 0; index < collection.length - 1; index++) {
