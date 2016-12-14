@@ -47,10 +47,14 @@ function spaceship(value, comparison) {
  *
  * @example
  *
- *      [0, 9, 2, 7, 5, 1, 10]
- *      [0, 2, 5, 1] [7] [9, 10]
- *      [0, 1] [2] [5] [7] [9, 10]
- *      [0] [1] [2] [5] [7] [9] [10]
+ *      [0, 10, 2, 7, 5, 1, 9]
+ *      ↓
+ *      [0, 2, 5, 1], [7], [10, 9]
+ *      ↓
+ *      [0, 1], [2], [5], [7], [10, 9]
+ *      ↓
+ *      [0], [1], [2], [5], [7], [9], [10]
+ *      ↓
  *      [0, 1, 2, 5, 7, 9, 10]
  *
  * Quicksort lives up to its name-it is quick: In the above example it takes only
@@ -78,8 +82,18 @@ Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
 
 /**
  * Use iterative bubble sort to reorder a collection.
- *
  * TODO: Document this for newbies.
+ *
+ * @example
+ *
+ *       ↓
+ *      [0, 10, 2, 7, 5, 1, 9]
+ *          ↓
+ *      [0, 10, 2, 7, 5, 1, 9]
+ *             ↓
+ *      [0, 2, 10, 7, 5, 1, 9]
+ *                ↓
+ *      [0, 2, 7, 10, 5, 1, 9]
  *
  * @public
  * @see https://en.wikipedia.org/wiki/Bubble_sort
@@ -93,16 +107,21 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
         return collection;
     }
 
+    let sorted = true;
     collection = collection.slice();
 
     for (let index = 0; index < collection.length - 1; index++) {
         if (parseInt(predicate(collection[index], collection[index + 1])) > 0) {
             [collection[index], collection[index + 1]] = [collection[index + 1], collection[index]];
-            index = 0;
+            sorted = false;
         }
     }
 
-    return collection;
+    if (sorted) {
+        return collection;
+    } else {
+        return this.bubblesort(collection, predicate);
+    }
 };
 
 module.exports = Object.create(Srtr.prototype);
