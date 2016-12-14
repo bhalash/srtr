@@ -1,4 +1,5 @@
 'use strict';
+/* eslint no-magic-numbers: "off" */
 
 const Srtr = function() {};
 
@@ -33,9 +34,24 @@ function spaceship(value, comparison) {
 }
 
 /**
- * Use recursive quicksort to reorder a collection.
+ * Use recursive quicksort to reorder a collection. Quicksort works by:
  *
- * TODO: Document this for newbies.
+ *  1. Identifying a pivot point (the midpoint rounded down in this case) in the
+ *     array. Other implementations apply more intelligence or start at tne end.
+ *  2. Think of a left-to-right arrangement:
+ *        a. Values smaller than the pivot go into a new array put before the pivot.
+ *        b. Values larger than the pivot go into a new array put after the pivot.
+ *  3. Repeat this recursively with each sub array until arrays of a single
+ *     element in size.
+ *  4. Merge and return the array.
+ *
+ * @example
+ *
+ *      [0, 9, 2, 7, 5, 1, 10]
+ *      [0, 2, 5, 1] [7] [9, 10]
+ *      [0, 1] [2] [5] [7] [9, 10]
+ *      [0] [1] [2] [5] [7] [9] [10]
+ *      [0, 1, 2, 5, 7, 9, 10]
  *
  * @public
  * @see https://en.wikipedia.org/wiki/Quicksort
@@ -44,7 +60,6 @@ function spaceship(value, comparison) {
  */
 
 Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
-    /* eslint no-magic-numbers: "off" */
     if (collection.length < 2) {
         return collection;
     }
