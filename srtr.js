@@ -53,6 +53,9 @@ function spaceship(value, comparison) {
  *      [0] [1] [2] [5] [7] [9] [10]
  *      [0, 1, 2, 5, 7, 9, 10]
  *
+ * Quicksort lives up to its name-it is quick: In the above example it takes only
+ * four passes to sort the entire array.
+ *
  * @public
  * @see https://en.wikipedia.org/wiki/Quicksort
  * @param {array} collection - Unsorted collecton.
