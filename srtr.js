@@ -73,12 +73,13 @@ function spaceship(current, next) {
  * @return {array} collection - Sorted collecton.
  */
 
-Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
+Srtr.prototype.quicksort = function(collection, predicate) {
     if (collection.length < 2) {
         return collection;
     }
 
     const pivot = collection[collection.length >> 1];
+    predicate = predicate || spaceship;
 
     return [
         ...this.quicksort(collection.filter(element => predicate(element, pivot) < 0), predicate),
@@ -118,17 +119,22 @@ Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
  * @return {array} collection - Sorted collection.
  */
 
-Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
+Srtr.prototype.bubblesort = function(collection, predicate) {
     if (collection.length < 2) {
         return collection;
     }
 
     let sorted = true,
-        copy = collection.slice();
+        copy = collection.slice(),
+        temp;
+
+    predicate = predicate || spaceship;
 
     for (let index = 0; index < copy.length - 1; index++) {
         if (index < copy.length - 1 && parseInt(predicate(copy[index], copy[index + 1])) > 0) {
-            [copy[index], copy[index + 1]] = [copy[index + 1], copy[index]];
+            temp = copy[index];
+            copy[index] = copy[index + 1];
+            copy [index + 1] = temp;
             sorted = false;
         }
     }
