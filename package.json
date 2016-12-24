@@ -1,14 +1,36 @@
 {
   "name": "srtr",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of sort algorithms.",
   "main": "srtr.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --harmony test/test.js"
   },
   "author": "Mark Grealish <mark@bhalash.com> (https://www.bhalash.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.6.3",
+    "wordscramble": "^5.1.18"
+  },
+  "dependencies": {
+    "tape": "^4.6.3",
+    "wordscramble": "^5.1.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhalash/srtr.git"
+  },
+  "keywords": [
+    "sort",
+    "learning",
+    "quicksort",
+    "bubblesort"
+  ],
+  "bugs": {
+    "url": "https://github.com/bhalash/srtr/issues"
+  },
+  "homepage": "https://github.com/bhalash/srtr#readme"
 }
