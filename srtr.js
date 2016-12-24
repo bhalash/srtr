@@ -17,7 +17,7 @@ const Srtr = function() {};
  * dealing with numbers, three-way comparisons can be shorted by the subtraction
  * of the second number from the first.
  *
- * Ruby's spaceship (<=>) typifies a three-way comparison:
+ * Ruby's spaceship (<=>) offers a shorthand for three-way comparison:
  *
  * @example
  *
