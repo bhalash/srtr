@@ -4,33 +4,36 @@
 const Srtr = function() {};
 
 /**
- * Fallback sort predicate. Perform ternary comparsion of numbers.
- *
- * TODO: Explain all this.
- * TODO: Document spaceship (<=>) operator.
+ * Default predicate which performs lexicographic three-way comparison of two
+ * values. The is the fundamental building block of most sorting algorithms:
  *
  * @example
  *
- *      2 <=> 3 // -1
- *      3 <=> 3 //  0
- *      3 <=> 2 //  1
+ *      A < B // -1
+ *      A = B //  0
+ *      A > B //  1
+ *
+ * A value above 0 indicates that A < B, and a sort operation then occurs. When
+ * dealing with numbers, three-way comparisons can be shorted by the subtraction
+ * of the second number from the first.
+ *
+ * Ruby's spaceship (<=>) typifies a three-way comparison:
  *
  * @example
  *
- *      10 - 7  //  3
- *      10 - 10 //  0
- *      10 - 13 // -3
+ *      7 <=> 9 // -1
+ *      7 <=> 7 //  0
+ *      9 <=> 7 //  1
  *
  * @private
  * @see https://en.wikipedia.org/wiki/Three-way_comparison
- * @see https://en.wikipedia.org/wiki/%3F:
- * @param {number} value - Current value in collection.
- * @param {number} comparison - Comparison value in collection.
+ * @param {number} current - Current value in collection.
+ * @param {number} next - Next, comparison value in collection.
  * @return {number} - Next value subtracted from current.
  */
 
-function spaceship(value, comparison) {
-    return value < comparison ? -1 : value === comparison ? 0 : 1;
+function spaceship(current, next) {
+    return current < next ? -1 : current === next ? 0 : 1;
 }
 
 /**
