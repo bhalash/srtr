@@ -86,7 +86,16 @@ Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
 
 /**
  * Use iterative bubble sort to reorder a collection.
- * TODO: Document this for newbies.
+ *
+ * A bubble sort slowyly causes higher elements to "bubble" from the start or
+ * the array, to the end, over multiple successive passes.
+ *
+ *  1. If the current index value is higher than its right-hand neigbour, swap
+ *     their positions in the collection.
+ *  2. Repeat this action until the end of the array is reached.
+ *  3. If the array is dirty, repeat this.
+ *  4. Continue successive passes until an iteration reaches the end without
+ *     swapping any values.
  *
  * @example
  *
