@@ -34,16 +34,20 @@ function spaceship(value, comparison) {
 }
 
 /**
- * Use recursive quicksort to reorder a collection. Quicksort works by:
+ * Use recursive quicksort to reorder a collection. Quicksort works through a
+ * three-step "divide and conqueror" mechanism:
  *
- *  1. Identifying a pivot point (the midpoint rounded down in this case) in the
- *     array. Other implementations apply more intelligence or start at tne end.
+ *  1. Identify a pivot point in the array. Other implementations apply more
+ *     intelligence or start at tne end, but I am happy to use the midpoint
+ *     rounded down.
  *  2. Think of a left-to-right arrangement:
- *        a. Values smaller than the pivot go into a new array put before the pivot.
- *        b. Values larger than the pivot go into a new array put after the pivot.
- *  3. Repeat this recursively with each sub array until arrays of a single
- *     element in size.
- *  4. Merge and return the array.
+ *        a. Values smaller than the pivot go into a new array _before_ the pivot.
+ *        c. Values equal to the pivot are joined with it in an new array.
+ *        c. Values larger than the pivot go into a new array _after_ the pivot.
+ *  3. Repeat steps #1 and #2 recursively with each sub array until arrays of
+ *      single element in size are generated.
+ *
+ * Returned the merged arrays once the original is completely decomposed.
  *
  * @example
  *
@@ -110,7 +114,7 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
     let sorted = true;
     collection = collection.slice();
 
-    for (let index = 0; index < collection.length - 1; index++) {
+    for (let index of collection.keys()) {
         if (parseInt(predicate(collection[index], collection[index + 1])) > 0) {
             [collection[index], collection[index + 1]] = [collection[index + 1], collection[index]];
             sorted = false;
