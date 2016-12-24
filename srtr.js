@@ -123,20 +123,20 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
         return collection;
     }
 
-    let sorted = true;
-    collection = collection.slice();
+    let sorted = true,
+        copy = collection.slice();
 
-    for (let index of collection.keys()) {
-        if (parseInt(predicate(collection[index], collection[index + 1])) > 0) {
-            [collection[index], collection[index + 1]] = [collection[index + 1], collection[index]];
+    for (let index = 0; index < copy.length - 1; index++) {
+        if (index < copy.length - 1 && parseInt(predicate(copy[index], copy[index + 1])) > 0) {
+            [copy[index], copy[index + 1]] = [copy[index + 1], copy[index]];
             sorted = false;
         }
     }
 
     if (sorted) {
-        return collection;
+        return copy;
     } else {
-        return this.bubblesort(collection, predicate);
+        return this.bubblesort(copy, predicate);
     }
 };
 
