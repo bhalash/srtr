@@ -4,6 +4,7 @@ srtr is a collection of sort algorithms written in JavaScript in a recursive, fu
 [![Build Status](https://travis-ci.org/bhalash/srtr.svg?branch=master)](https://travis-ci.org/bhalash/srtr)
 [![dependencies Status](https://david-dm.org/bhalash/srtr/status.svg)](https://david-dm.org/bhalash/srtr)
 [![devDependencies Status](https://david-dm.org/bhalash/srtr/dev-status.svg)](https://david-dm.org/bhalash/srtr?type=dev)
+[![npm version](https://badge.fury.io/js/srtr.svg)](https://badge.fury.io/js/srtr)
 
 ## Installation
 
