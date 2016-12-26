@@ -1,7 +1,7 @@
 {
   "name": "srtr",
   "version": "1.0.0",
-  "description": "A collection of sort algorithms.",
+  "description": "A collection of annotated sort algorithms for learner users.",
   "main": "srtr.js",
   "directories": {
     "test": "test"
