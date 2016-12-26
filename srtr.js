@@ -37,6 +37,23 @@ function spaceship(current, next) {
 }
 
 /**
+ * Swap two values in a collection. Absracted out for neatness.
+ *
+ * @private
+ * @param {array} collection
+ * @param {number} first
+ * @param {number} second
+ * @return {array} collection
+ */
+
+function swap(collection, first, second) {
+    let temp = collection[first];
+    collection[first] = collection[second];
+    collection[second] = temp;
+    return collection;
+}
+
+/**
  * Use recursive quicksort to reorder a collection. Quicksort works through a
  * three-step "divide and conqueror" mechanism:
  *
@@ -125,16 +142,13 @@ Srtr.prototype.bubblesort = function(collection, predicate) {
     }
 
     let sorted = true,
-        copy = collection.slice(),
-        temp;
+        copy = collection.slice();
 
     predicate = predicate || spaceship;
 
     for (let index = 0; index < copy.length - 1; index++) {
-        if (index < copy.length - 1 && parseInt(predicate(copy[index], copy[index + 1])) > 0) {
-            temp = copy[index];
-            copy[index] = copy[index + 1];
-            copy [index + 1] = temp;
+        if (parseInt(predicate(copy[index], copy[index + 1])) > 0) {
+            copy = swap(copy, index, index + 1);
             sorted = false;
         }
     }
