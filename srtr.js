@@ -37,20 +37,42 @@ function spaceship(current, next) {
 }
 
 /**
- * Swap two values in a collection. Absracted out for neatness.
+ * Return a random value up to max.
  *
  * @private
- * @param {array} collection
- * @param {number} first
- * @param {number} second
- * @return {array} collection
+ * @param {number} max - Maximum value.
+ * @returns {number} - Random number.
  */
 
-function swap(collection, first, second) {
-    let temp = collection[first];
-    collection[first] = collection[second];
-    collection[second] = temp;
-    return collection;
+function random(max) {
+    return Math.floor(Math.random() * max);
+}
+
+/**
+ * Scramble the order of elements in an array.
+ *
+ * Strings (and numbers cast as strings) are passed to this function to be
+ * scrambled.
+ *
+ * @private
+ * @param {array} collection - Unscrambled array.
+ * @returns {array} collection - Recursively scrambled array.
+ */
+
+function scramble(collection) {
+    if (collection.length < 2) {
+        return collection;
+    }
+
+    let copy = collection.slice(),
+        index = copy.length,
+        rand = random(index);
+
+    while (--index > 0) {
+        [copy[index], copy[rand]] = [copy[rand], copy[index]];
+    }
+
+    return copy;
 }
 
 /**
@@ -90,13 +112,12 @@ function swap(collection, first, second) {
  * @return {array} collection - Sorted collecton.
  */
 
-Srtr.prototype.quicksort = function(collection, predicate) {
+Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
     if (collection.length < 2) {
         return collection;
     }
 
     const pivot = collection[collection.length >> 1];
-    predicate = predicate || spaceship;
 
     return [
         ...this.quicksort(collection.filter(element => predicate(element, pivot) < 0), predicate),
@@ -136,7 +157,7 @@ Srtr.prototype.quicksort = function(collection, predicate) {
  * @return {array} collection - Sorted collection.
  */
 
-Srtr.prototype.bubblesort = function(collection, predicate) {
+Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
     if (collection.length < 2) {
         return collection;
     }
@@ -144,11 +165,9 @@ Srtr.prototype.bubblesort = function(collection, predicate) {
     let sorted = true,
         copy = collection.slice();
 
-    predicate = predicate || spaceship;
-
     for (let index = 0; index < copy.length - 1; index++) {
-        if (parseInt(predicate(copy[index], copy[index + 1])) > 0) {
-            copy = swap(copy, index, index + 1);
+        if (predicate(copy[index], copy[index + 1]) > 0) {
+            [copy[index], copy[index + 1]] = [copy[index + 1], copy[index]];
             sorted = false;
         }
     }
@@ -159,5 +178,27 @@ Srtr.prototype.bubblesort = function(collection, predicate) {
         return this.bubblesort(copy, predicate);
     }
 };
+
+/**
+ * Randomly scramble a collection until it comes back sorted.
+ *
+ * @public
+ * @see https://en.wikipedia.org/wiki/Bogosort
+ * @param {array} collection - Unsorted collection
+ * @param {function} predicate - Predicate function to test values.
+ * @return {array} collection - A sorted collection. Eventually. Hopefully.
+ */
+
+// Srtr.prototype.bogosort = function(collection, predicate = spaceship) {
+//     if (collection.length < 2) {
+//         return collection;
+//     }
+//
+//     if (collection.every((element, index) => predicate(element, collection[index + 1])) < 1) {
+//         return collection;
+//     } else {
+//         return this.bogosort(scramble(collection), predicate);
+//     }
+// };
 
 module.exports = Object.create(Srtr.prototype);
