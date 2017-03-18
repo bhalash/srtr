@@ -76,6 +76,25 @@ function scramble(collection) {
 }
 
 /**
+ * Test if a collection is sorted.
+ *
+ * @private
+ * @param {array} collection;
+ * @param {function} predicate;
+ * @param {boolean} Is collection sorted?
+ */
+
+function sorted(collection, predicate = spaceship) {
+    if (collection.length < 2) {
+        return true;
+    }
+
+    return collection.slice(0, -1).every((element, index) => {
+        return predicate(element, collection[index + 1]) < 1;
+    });
+}
+
+/**
  * Use recursive quicksort to reorder a collection. Quicksort works through a
  * three-step "divide and conqueror" mechanism:
  *
@@ -158,25 +177,19 @@ Srtr.prototype.quicksort = function(collection, predicate = spaceship) {
  */
 
 Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
-    if (collection.length < 2) {
+    if (sorted(collection, predicate)) {
         return collection;
     }
 
-    let sorted = true,
-        copy = collection.slice();
+    let copy = collection.slice();
 
     for (let index = 0; index < copy.length - 1; index++) {
         if (predicate(copy[index], copy[index + 1]) > 0) {
             [copy[index], copy[index + 1]] = [copy[index + 1], copy[index]];
-            sorted = false;
         }
     }
 
-    if (sorted) {
-        return copy;
-    } else {
-        return this.bubblesort(copy, predicate);
-    }
+    return this.bubblesort(copy, predicate);
 };
 
 /**
@@ -186,19 +199,15 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
  * @see https://en.wikipedia.org/wiki/Bogosort
  * @param {array} collection - Unsorted collection
  * @param {function} predicate - Predicate function to test values.
- * @return {array} collection - A sorted collection. Eventually. Hopefully.
+ * @return {array} collection - A sorted collection...eventually.
  */
 
-// Srtr.prototype.bogosort = function(collection, predicate = spaceship) {
-//     if (collection.length < 2) {
-//         return collection;
-//     }
-//
-//     if (collection.every((element, index) => predicate(element, collection[index + 1])) < 1) {
-//         return collection;
-//     } else {
-//         return this.bogosort(scramble(collection), predicate);
-//     }
-// };
+Srtr.prototype.bogosort = function(collection, predicate = spaceship) {
+    if (sorted(collection, predicate)) {
+        return collection;
+    }
+
+    return this.bogosort(scramble(collection), predicate);
+};
 
 module.exports = Object.create(Srtr.prototype);

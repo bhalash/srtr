@@ -22,7 +22,7 @@ tape('quicksort()', assert => {
 });
 
 /**
- * quicksort() Method
+ * bubblesort() Method
  * =============================================================================
  */
 
@@ -32,5 +32,21 @@ tape('bubblesort()', assert => {
     assert.plan(3);
     assert.equal(typeof srtr.bubblesort, 'function');
     assert.deepEqual(srtr.bubblesort(scramble.array(victim)), presorted);
+    assert.deepEqual(victim, comparison);
+});
+
+/**
+ * bogosort() Method
+ * =============================================================================
+ */
+
+tape('bogosort()', assert => {
+    const victim = ['Y', 'O', 'L', 'O'];
+    const comparison = ['Y', 'O', 'L', 'O'];
+    const sorted = ['L', 'O', 'O', 'Y'];
+
+    assert.plan(3);
+    assert.equal(typeof srtr.bogosort, 'function');
+    assert.deepEqual(srtr.bogosort(victim), sorted);
     assert.deepEqual(victim, comparison);
 });
