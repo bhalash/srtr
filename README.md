@@ -43,4 +43,6 @@ An overriding predicate may be passed as a second parameter:
 Go wild! All pull requests are welcome.
 
 ## Copyright
-Copyright (c) 2016 [Mark Grealish][10]. See [LICENSE](LICENSE) for details.
+Copyright (c) 2016 [Mark Grealish][1]. See [LICENSE](LICENSE) for details.
+
+[1]: https://www.bhalash.com
