@@ -64,7 +64,7 @@ function scramble(collection) {
         return collection;
     }
 
-    let copy = collection.slice(),
+    let copy = [...collection],
         index = copy.length,
         rand = random(index);
 
@@ -181,7 +181,7 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
         return collection;
     }
 
-    let copy = collection.slice();
+    let copy = [...collection];
 
     for (let index = 0; index < copy.length - 1; index++) {
         if (predicate(copy[index], copy[index + 1]) > 0) {
