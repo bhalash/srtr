@@ -50,3 +50,17 @@ tape('bogosort()', assert => {
     assert.deepEqual(srtr.bogosort(victim), sorted);
     assert.deepEqual(victim, comparison);
 });
+
+/**
+ * radixsort() Method
+ * =============================================================================
+ */
+
+tape('radixsort()', assert => {
+    const victim = comparison;
+
+    assert.plan(3);
+    assert.equal(typeof srtr.radixsort, 'function');
+    assert.deepEqual(srtr.radixsort(scramble.array(victim)), presorted);
+    assert.deepEqual(victim, comparison);
+});

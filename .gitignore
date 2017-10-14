@@ -7,4 +7,6 @@
 !LICENSE
 !README.md
 !package.json
+!package-lock.json
+!srtr.js
 !wordscramble.js
