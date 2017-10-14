@@ -193,6 +193,77 @@ Srtr.prototype.bubblesort = function(collection, predicate = spaceship) {
 };
 
 /**
+ * Use buckets to sort an array by comparing numbers by digits and putting them
+ * into buckets.
+ *
+ * In the first iteration, the numbers get compared by their last digit, in the second by their second, etc.
+ *
+ * Note: This example does only work with positive values, since the sign bit gets interpreted as the most
+ * significant bit
+ *
+ * @example
+ *
+ *      [110, 001, 101, 011]
+ *
+ *      First partition phase (1st digit from the right):
+ *      |0|     |1|
+ *      110     001
+ *              101
+ *              011
+ *
+ *      First collection phase:
+ *      [110, 001, 101, 011]
+ *
+ *      Second partition phase (2nd digit from the right):
+ *      |0|     |1|
+ *      001     110
+ *      101     011
+ *
+ *      Second collection phase:
+ *      [001, 101, 110, 011]
+ *
+ *      Third partition phase (3rd digit from the right):
+ *      |0|     |1|
+ *      001     101
+ *      011     110
+ *
+ *      Third collection phase:
+ *      [001, 011, 101, 110]
+ *
+ * @public
+ * @see https://en.wikipedia.org/wiki/Radix_sort
+ * @param {array} collection - Unsorted collection
+ * @param {function} predicate - Predicate function to compare values
+ * @return {array} - sorted collection
+ */
+
+Srtr.prototype.radixsort = function (collection, predicate = spaceship) {
+    let buckets = [new Array(collection.length), new Array(collection.length)];
+
+    for (let i = 0; i < 32; i++) {
+        // number of numbers in each bucket
+        let nBuckets = [0, 0];
+
+        // partition phase
+        for (let j = 0; j < collection.length; j++) {
+            // find out which bucket should be used
+            let bucket = (collection[j] >> i) & 1;
+            buckets[bucket][nBuckets[bucket]++] = collection[j];
+        }
+
+        // collection phase, merge both buckets back into the main list
+        for (let j = 0; j < nBuckets[0]; j++) {
+            collection[j] = buckets[0][j];
+        }
+        for (let j = 0; j < nBuckets[1]; j++) {
+            collection[nBuckets[0] + j] = buckets[1][j];
+        }
+    }
+
+    return collection;
+};
+
+/**
  * Randomly scramble a collection until it comes back sorted.
  *
  * @public
