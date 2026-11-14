@@ -27,8 +27,8 @@ export const compareNumbers: Comparator<number> = (a: number, b: number) => b - 
 /**
  * Return a random value up to max.
  */
-export function random(max: number): number {
-  return Math.floor(Math.random() * max);
+export function random(maxValue: number): number {
+  return Math.floor(Math.random() * maxValue);
 }
 
 /**
@@ -37,12 +37,12 @@ export function random(max: number): number {
  * Strings (and numbers cast as strings) are passed to this function to be
  * scrambled.
  */
-export function scramble<T>(collection: T[]): T[] {
-  if (collection.length < 2) {
-    return collection;
+export function scramble<T>(arr: T[]): T[] {
+  if (arr.length < 2) {
+    return arr;
   }
 
-  let copy = [...collection],
+  let copy = [...arr],
   index = copy.length,
   rand = random(index);
 
@@ -54,14 +54,14 @@ export function scramble<T>(collection: T[]): T[] {
 }
 
 /**
- * Test if a collection is sorted.
+ * Test if an array is sorted.
+ *
+ * The slice excludes the last index
  */
-export function sorted<T>(collection: T[], comparator: Comparator<T>): boolean {
-  if (collection.length < 2) {
+export function sorted<T>(arr: T[], comparator: Comparator<T>): boolean {
+  if (arr.length < 2) {
     return true;
+  } else {
+    return arr.slice(1).every((val, index) => comparator(val, arr[index]) < 1);
   }
-
-  return collection.slice(0, -1).every((element, index) => {
-    return comparator(element, collection[index + 1]) < 1;
-  });
 }
