@@ -25,6 +25,7 @@
     "sort",
     "learning",
     "quicksort",
+    "bogosort",
     "bubblesort"
   ],
   "bugs": {
