@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "skipLibCheck": true
+    "target": "esnext",
+    "types": ["node"]
   },
-  "include": [
-    "index.ts"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/"]
 }

@@ -4,18 +4,14 @@
   "description": "A collection of annotated sort algorithms for learner users.",
   "main": "index.ts",
   "scripts": {
-    "test": "node --harmony test/test.js"
+    "test": "vitest run"
   },
   "author": "Mark Grealish <mark@bhalash.com> (https://www.bhalash.com)",
   "license": "MIT",
-  "dependencies": {
-    "tape": "^4.6.3",
-    "wordscramble": "^5.1.18"
-  },
   "devDependencies": {
-    "tape": "^4.6.3",
+    "@faker-js/faker": "^10.6.0",
     "typescript": "^7.0.2",
-    "wordscramble": "^5.1.18"
+    "vitest": "^5.1.0"
   },
   "repository": {
     "type": "git",
