@@ -1,10 +1,1 @@
-/*
-
-!test/
-
-!.gitignore
-!.travis.yml
-!LICENSE
-!README.md
-!package.json
-!wordscramble.js
+node_modules/
