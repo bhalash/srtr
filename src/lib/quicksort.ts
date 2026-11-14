@@ -32,16 +32,16 @@ import { Comparator } from './utils';
  * four passes to sort the entire array.
  */
 
-export function quicksort<T>(collection: T[], comparator: Comparator<T>): T[] {
-  if (collection.length < 2) {
-    return collection;
+export function quicksort<T>(arr: T[], comparator: Comparator<T>): T[] {
+  if (arr.length < 2) {
+    return arr;
   }
 
-  const pivot = collection[collection.length >> 1];
+  const pivot = arr[arr.length >> 1];
 
   return [
-    ...quicksort(collection.filter(element => comparator(element, pivot) < 0), comparator),
-    ...collection.filter(element => comparator(element, pivot) === 0),
-    ...quicksort(collection.filter(element => comparator(element, pivot) > 0), comparator)
+    ...quicksort(arr.filter(element => comparator(element, pivot) < 0), comparator),
+    ...arr.filter(element => comparator(element, pivot) === 0),
+    ...quicksort(arr.filter(element => comparator(element, pivot) > 0), comparator)
   ];
 };
