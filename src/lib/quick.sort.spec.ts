@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { quicksort } from './quicksort';
+import { quicksort } from './quick.sort';
 
 describe('quicksort', () => {
   it('should be a function', () => {

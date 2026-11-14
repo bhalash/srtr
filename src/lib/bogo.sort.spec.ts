@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { bogosort } from './bogosort';
+import { bogosort } from './bogo.sort';
 
 describe('bogosort', () => {
   it('should be a function', () => {

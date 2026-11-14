@@ -8,36 +8,47 @@ srtr is a collection of sort algorithms written in JavaScript in a recursive, fu
 
 ## Installation
 
-    npm install srtr
+```sh
+npm install srtr
+```
 
 ## Usage
 
-    srtr.quicksort(collection[, predicate]);
-    const srtr = require('srtr');
+```typescript
+import { compareStrings, quicksort } from 'srtr';
 
-To sort using the default predicate (lexicographic order):
+const planets = [
+  'Kaitain',
+  'Geidi Prime',
+  'Arrakis',
+  'Ecaz',
+  'Chapterhouse'
+];
 
-    const planets = ['Kaitain', 'Geidi Prime', 'Arrakis', 'Ecaz', 'Chapterhouse'];
-    srtr.quicksort(planets);
-    srtr.bubblesort(planets);
+quicksort(planets, compareStrings);
+```
 
-An overriding predicate may be passed as a second parameter:
+### Comparators
 
-    const contacts = [
-        { name: 'Paul', age: 15 },
-        { name: 'Shaddam', age: 75 },
-        { name: 'Leto', 'age: 60 }
-    ];
+An overriding comparator can be passed as a second parameter:
 
-    srtr.quicksort(contacts, (a, b) => a.age - b.age);
+```typescript
+import { quicksort } from 'srtr';
 
-    srtr.bubblesort(contact, (a, b) => {
-        return a.name < b.name ? -1 : a.name === b.name ? 0 : 1;
-    });
+const contacts = [
+  { name: 'Paul', age: 15 },
+  { name: 'Shaddam', age: 75 },
+  { name: 'Leto', 'age: 60 }
+];
+
+quicksort(contacts, (a, b) => a.age - b.age);
+```
 
 ### Testing
 
-    npm run test
+```sh
+npm run test
+```
 
 ## Contributing
 Go wild! All pull requests are welcome.
