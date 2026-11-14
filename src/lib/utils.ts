@@ -22,7 +22,8 @@ export type Comparator<T = unknown> = (a: T, b: T) => number;
  *  7 <=> 7 //  0
  *  9 <=> 7 //  1
  */
-export const compareNumbers: Comparator<number> = (a: number, b: number) => b - a;
+export const compareNumbers: Comparator<number> = (a, b) => b - a;
+export const compareStrings: Comparator<string> = (a, b) => a.localeCompare(b);
 
 /**
  * Return a random value up to max.
