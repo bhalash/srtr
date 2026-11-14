@@ -21,11 +21,9 @@
  *  9 <=> 7 //  1
  */
 
-export type Comparator<T> = (a: T, b: T) => -1 | 0 | 1;
+export type Comparator<T = unknown> = (a: T, b: T) => number;
 
-export function spaceship(a: number, b: number) {
-  return a < b ? -1 : a === b ? 0 : 1;
-}
+export const spaceship: Comparator<number> = (a: number, b: number) => b - a;
 
 /**
  * Return a random value up to max.
@@ -59,7 +57,7 @@ export function scramble<T>(collection: T[]): T[] {
 /**
  * Test if a collection is sorted.
  */
-export function sorted<T>(collection: T[], comparator: any = spaceship): boolean {
+export function sorted<T>(collection: T[], comparator: Comparator<T>): boolean {
   if (collection.length < 2) {
     return true;
   }
@@ -101,7 +99,7 @@ export function sorted<T>(collection: T[], comparator: any = spaceship): boolean
  * four passes to sort the entire array.
  */
 
-export function quicksort<T>(collection: T[], comparator: Comparator<T> = spaceship): T[] {
+export function quicksort<T>(collection: T[], comparator: Comparator<T>): T[] {
   if (collection.length < 2) {
     return collection;
   }
@@ -145,7 +143,7 @@ export function quicksort<T>(collection: T[], comparator: Comparator<T> = spaces
  * @param {function} comparator - Predicate function to test values.
  * @return {array} collection - Sorted collection.
  */
-export function bubblesort<T>(collection: T[], comparator = spaceship): T[] {
+export function bubblesort<T>(collection: T[], comparator: Comparator<T>): T[] {
   if (sorted(collection, comparator)) {
     return collection;
   }
@@ -165,7 +163,7 @@ export function bubblesort<T>(collection: T[], comparator = spaceship): T[] {
  * Randomly scramble a collection until it comes back sorted. The beatings will
  * continue until morale improves.
  */
-export function bogosort<T>(collection: T[], comparator = spaceship): T[] {
+export function bogosort<T>(collection: T[], comparator: Comparator<T>): T[] {
   if (sorted(collection, comparator)) {
     return collection;
   }
