@@ -35,9 +35,9 @@ export function random(maxValue: number): number {
  * Scramble the order of elements in an array.
  *
  * Strings (and numbers cast as strings) are passed to this function to be
- * scrambled.
+ * shuffled.
  */
-export function scramble<T>(arr: T[]): T[] {
+export function shuffle<T>(arr: T[]): T[] {
   if (arr.length < 2) {
     return arr;
   }

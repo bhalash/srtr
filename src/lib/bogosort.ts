@@ -1,7 +1,7 @@
-import { Comparator, sorted, scramble } from './utils';
+import { Comparator, sorted, shuffle } from './utils';
 
 /**
- * Randomly scramble an array until it comes back sorted. The beatings will
+ * Randomly shuffle an array until it comes back sorted. The beatings will
  * continue until morale improves.
  */
 export function bogosort<T>(arr: T[], comparator: Comparator<T>): T[] {
@@ -9,5 +9,5 @@ export function bogosort<T>(arr: T[], comparator: Comparator<T>): T[] {
     return arr;
   }
 
-  return bogosort(scramble(arr), comparator);
+  return bogosort(shuffle(arr), comparator);
 };

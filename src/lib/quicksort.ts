@@ -39,9 +39,9 @@ export function quicksort<T>(arr: T[], comparator: Comparator<T>): T[] {
 
   const pivot = arr[arr.length >> 1];
 
-  return [
-    ...quicksort(arr.filter(element => comparator(element, pivot) < 0), comparator),
-    ...arr.filter(element => comparator(element, pivot) === 0),
-    ...quicksort(arr.filter(element => comparator(element, pivot) > 0), comparator)
-  ];
+  const smaller = quicksort(arr.filter(element => comparator(element, pivot) < 0), comparator);
+  const equal = arr.filter(element => comparator(element, pivot) === 0);
+  const larger = quicksort(arr.filter(element => comparator(element, pivot) > 0), comparator);
+
+  return [...smaller, ...equal, ...larger];
 };
