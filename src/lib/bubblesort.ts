@@ -23,6 +23,8 @@ import { Comparator, sorted } from './utils';
  *  [0, 2, 10, 7, 5, 1, 9]
  *            ↓
  *  [0, 2, 7, 10, 5, 1, 9]
+ *
+ * @see https://en.wikipedia.org/wiki/Bubble_sort
  */
 export function bubblesort<T>(arr: T[], comparator: Comparator<T>): T[] {
   if (sorted(arr, comparator)) {

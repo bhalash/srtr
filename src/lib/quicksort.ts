@@ -18,18 +18,21 @@ import { Comparator } from './utils';
  *
  * @example
  *
- *      [0, 10, 2, 7, 5, 1, 9]
- *      ↓
- *      [0, 2, 5, 1], [7], [10, 9]
- *      ↓
- *      [0, 1], [2], [5], [7], [10, 9]
- *      ↓
- *      [0], [1], [2], [5], [7], [9], [10]
- *      ↓
- *      [0, 1, 2, 5, 7, 9, 10]
+ *             ↓
+ *  [0, 10, 2, 7, 5, 1, 9]
+ *                  ↓
+ *  [{0, 2, 5, 1}, {7}, {10, 9}]
+ *                      ↓
+ *  [{0, 1}, {2}, {5}, {7}, {10, 9}]
+ *                        ↓
+ *  [{0}, {1}, {2}, {5}, {7}, {9}, {10}]
+ *               ↓
+ *  [0, 1, 2, 5, 7, 9, 10]
  *
  * Quicksort lives up to its name-it is quick: In the above example it takes only
  * four passes to sort the entire array.
+ *
+ * @see https://en.wikipedia.org/wiki/Quicksort
  */
 
 export function quicksort<T>(arr: T[], comparator: Comparator<T>): T[] {

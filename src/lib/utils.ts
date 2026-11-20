@@ -22,47 +22,55 @@ export type Comparator<T = unknown> = (a: T, b: T) => number;
  *  7 <=> 7 //  0
  *  9 <=> 7 //  1
  */
-export const compareNumbers: Comparator<number> = (a, b) => b - a;
+export const compareNumbers: Comparator<number> = (a, b) => a - b;
 export const compareStrings: Comparator<string> = (a, b) => a.localeCompare(b);
 
-/**
- * Return a random value up to max.
- */
-export function random(maxValue: number): number {
-  return Math.floor(Math.random() * maxValue);
-}
-
-/**
- * Scramble the order of elements in an array.
- *
- * Strings (and numbers cast as strings) are passed to this function to be
- * shuffled.
- */
-export function shuffle<T>(arr: T[]): T[] {
-  if (arr.length < 2) {
-    return arr;
-  }
-
-  let copy = [...arr],
-  index = copy.length,
-  rand = random(index);
-
-  while (--index > 0) {
-    [copy[index], copy[rand]] = [copy[rand], copy[index]];
-  }
-
-  return copy;
-}
-
-/**
- * Test if an array is sorted.
- *
- * The slice excludes the last index
- */
 export function sorted<T>(arr: T[], comparator: Comparator<T>): boolean {
   if (arr.length < 2) {
     return true;
   } else {
-    return arr.slice(1).every((val, index) => comparator(val, arr[index]) < 1);
+    // The slice excludes the last index
+    return arr.slice(1).every((val, index) => comparator(val, arr[index]) > -1);
   }
+}
+
+export function longestNumber(arr: number[]): number {
+  if (!arr.length) {
+    return 0;
+  }
+
+  return arr.reduce((highest, value) => {
+    if (!isFinite(value) || !value) {
+      return 0;
+    }
+
+    const { length } = String(value);
+
+    if (length > highest) {
+      return length;
+    } else {
+      return highest;
+    }
+  }, 0);
+}
+
+// TODO(mark 2026-11-17): How to properly handle negative numbers?
+export function toStrings(arr: number[]): string[] {
+  const longest = longestNumber(arr);
+
+  return arr.map((value) => {
+    if (!isFinite(value) || !value) {
+      value = 0;
+    }
+
+    return String(Math.abs(value)).padStart(longest, '0');
+  });
+}
+
+export function toNumbers(arr: string[]): number[] {
+  return arr.flat().map(Number);
+}
+
+export function digitAt(value: string, position: number): number {
+  return Number(value.at(position) ?? 0);
 }
