@@ -1,28 +1,6 @@
 import { digitAt, toNumbers, toStrings } from './utils';
 
 /**
- * Recursively distribute an array of strings into buckets using its current
- * most-significant digit.
- */
-function msdRadixSort(arr: string[], position: number = 0): string[] {
-  if (arr.length < 2) {
-    return arr;
-  }
-
-  const buckets: Record<number, string[]> = {};
-
-  arr.forEach((value) => {
-    const digit = digitAt(value, position);
-    buckets[digit] ??= [];
-    buckets[digit].push(value);
-  });
-
-  return Object.values(buckets).flatMap((bucket) => {
-    return msdRadixSort(bucket, position + 1);
-  });
-}
-
-/**
  * Sort an array of numbers using forward, most-significant-digit radix sort.
  * The implementation first casts every number to a 0-padded string, based on
  * the longest value in the array. Zero-padding makes every value the same
@@ -52,6 +30,24 @@ function msdRadixSort(arr: string[], position: number = 0): string[] {
  *
  * @see https://en.wikipedia.org/wiki/Radix_sort
  */
+function msdRadixSort(arr: string[], position: number = 0): string[] {
+  if (arr.length < 2) {
+    return arr;
+  }
+
+  const buckets: Record<number, string[]> = {};
+
+  arr.forEach((value) => {
+    const digit = digitAt(value, position);
+    buckets[digit] ??= [];
+    buckets[digit].push(value);
+  });
+
+  return Object.values(buckets).flatMap((bucket) => {
+    return msdRadixSort(bucket, position + 1);
+  });
+}
+
 export function radixsort(arr: number[]): number[] {
   return toNumbers(msdRadixSort(toStrings(arr)));
 }
