@@ -47,11 +47,16 @@ function msdRadixSort(arr: string[], position: number = 0): string[] {
 }
 
 // TODO(mark 2026-11-21): doc
+// INFO(mark 2026-11-21): tested
+// TODO(mark 2026-11-17): How to properly handle negative numbers? SO suggests
+// that I identify negatives, pivot them out, convert them to positive numbers,
+// apply the sort, and then restore the sign.
 export function radixsort(arr: number[]): number[] {
   return toNumbers(msdRadixSort(toStrings(arr)));
 }
 
 // TODO(mark 2026-11-21): doc
+// INFO(mark 2026-11-21): tested
 export function longestNumber(arr: number[]): number {
   if (!arr.length) {
     return 0;
@@ -72,7 +77,7 @@ export function longestNumber(arr: number[]): number {
   }, 0);
 }
 
-// TODO(mark 2026-11-17): How to properly handle negative numbers?
+// INFO(mark 2026-11-21): tested
 export function toStrings(arr: number[]): string[] {
   const longest = longestNumber(arr);
 
@@ -86,11 +91,13 @@ export function toStrings(arr: number[]): string[] {
 }
 
 // TODO(mark 2026-11-21): doc
+// INFO(mark 2026-11-21): tested
 export function toNumbers(arr: string[]): number[] {
   return arr.flat().map(Number);
 }
 
 // TODO(mark 2026-11-21): doc
+// INFO(mark 2026-11-21): tested
 export function digitAt(value: string, position: number): number {
   return Number(value.at(position) ?? 0);
 }
