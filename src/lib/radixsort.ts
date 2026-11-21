@@ -29,7 +29,7 @@
  * @see https://en.wikipedia.org/wiki/Radix_sort
  */
 function msdRadixSort(arr: string[], position: number = 0): string[] {
-  if (arr.length < 2) {
+  if (arr.length < 2 || position > arr[0].length) {
     return arr;
   }
 

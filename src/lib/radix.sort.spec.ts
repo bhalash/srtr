@@ -22,9 +22,20 @@ describe('Radix Sort', () => {
       expect(radixsort(numbers)).toEqual(sorted);
     });
 
-    it('should sort an annoying edge case', () => {
+    it('should correctly sort an annoying edge case', () => {
       const numbers = [10001, 10000, 1001, 1000, 101, 100, 11, 10, 1];
       expect(radixsort(numbers)).toEqual([1, 10, 11, 100, 101, 1000, 1001, 10000, 10001]);
+    });
+
+    it('should sort arrays with identical numbers', () => {
+      const numbers = [2, 0, 1, 2, 0, 1, 0, 2, 1, 0, 1, 3];
+      expect(radixsort(numbers)).toEqual([0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3]);
+    });
+
+    it('should not infinitely recurse with an array full of identical numbers', () => {
+      expect(() => radixsort([0, 0, 0])).not.toThrow();
+      expect(() => radixsort([1, 1, 1])).not.toThrow();
+      expect(() => radixsort([2, 2, 2])).not.toThrow();
     });
   });
 
