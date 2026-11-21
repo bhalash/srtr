@@ -1,5 +1,3 @@
-import { digitAt, toNumbers, toStrings } from './utils';
-
 /**
  * Sort an array of numbers using forward, most-significant-digit radix sort.
  * The implementation first casts every number to a 0-padded string, based on
@@ -48,6 +46,51 @@ function msdRadixSort(arr: string[], position: number = 0): string[] {
   });
 }
 
+// TODO(mark 2026-11-21): doc
 export function radixsort(arr: number[]): number[] {
   return toNumbers(msdRadixSort(toStrings(arr)));
+}
+
+// TODO(mark 2026-11-21): doc
+export function longestNumber(arr: number[]): number {
+  if (!arr.length) {
+    return 0;
+  }
+
+  return arr.reduce((highest, value) => {
+    if (!isFinite(value) || !value) {
+      return 0;
+    }
+
+    const { length } = String(value);
+
+    if (length > highest) {
+      return length;
+    } else {
+      return highest;
+    }
+  }, 0);
+}
+
+// TODO(mark 2026-11-17): How to properly handle negative numbers?
+export function toStrings(arr: number[]): string[] {
+  const longest = longestNumber(arr);
+
+  return arr.map((value) => {
+    if (!isFinite(value) || !value) {
+      value = 0;
+    }
+
+    return String(Math.abs(value)).padStart(longest, '0');
+  });
+}
+
+// TODO(mark 2026-11-21): doc
+export function toNumbers(arr: string[]): number[] {
+  return arr.flat().map(Number);
+}
+
+// TODO(mark 2026-11-21): doc
+export function digitAt(value: string, position: number): number {
+  return Number(value.at(position) ?? 0);
 }

@@ -1,4 +1,4 @@
-export * from './lib/bogosort';
-export * from './lib/bubblesort';
-export * from './lib/quicksort';
-export * from './lib/radixsort';
+export { bogosort } from './lib/bogosort';
+export { bubblesort } from './lib/bubblesort';
+export { quicksort } from './lib/quicksort';
+export { radixsort } from './lib/radixsort';
