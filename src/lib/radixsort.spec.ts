@@ -63,31 +63,31 @@ describe('Radix Sort', () => {
     const value = 17532;
 
     it('should be the digit at the given position, based on the most-significant digit', () => {
-      expect(digitAt(value, 0)).toBe(1);
-      expect(digitAt(value, 1)).toBe(7);
-      expect(digitAt(value, 2)).toBe(5);
-      expect(digitAt(value, 3)).toBe(3);
-      expect(digitAt(value, 4)).toBe(2);
+      expect(digitAt(value, { position: 0 })).toBe(1);
+      expect(digitAt(value, { position: 1 })).toBe(7);
+      expect(digitAt(value, { position: 2 })).toBe(5);
+      expect(digitAt(value, { position: 3 })).toBe(3);
+      expect(digitAt(value, { position: 4 })).toBe(2);
     });
 
     it('should cast negative numbers as positive', () => {
-      expect(digitAt(-value, 0)).toBe(1);
-      expect(digitAt(-value, 1)).toBe(7);
-      expect(digitAt(-value, 2)).toBe(5);
-      expect(digitAt(-value, 3)).toBe(3);
-      expect(digitAt(-value, 4)).toBe(2);
+      expect(digitAt(-value, { position: 0 })).toBe(1);
+      expect(digitAt(-value, { position: 1 })).toBe(7);
+      expect(digitAt(-value, { position: 2 })).toBe(5);
+      expect(digitAt(-value, { position: 3 })).toBe(3);
+      expect(digitAt(-value, { position: 4 })).toBe(2);
     });
 
     it('should be 0 when there is no matching digit', () => {
-      expect(digitAt(value, 9999)).toBe(0);
-      expect(digitAt(value, -999)).toBe(0);
+      expect(digitAt(value, { position: 9999 })).toBe(0);
+      expect(digitAt(value, { position: -999 })).toBe(0);
     });
 
     it('should be 0 when the longest parameter is longer than the number', () => {
-      expect(digitAt(value, 0)).toBe(1);
-      expect(digitAt(value, 0, 9999)).toBe(0);
-      expect(digitAt(value, 1)).toBe(7);
-      expect(digitAt(value, 1, 9999)).toBe(0);
+      expect(digitAt(value, { position: 0 })).toBe(1);
+      expect(digitAt(value, { position: 0, longest: 9999 })).toBe(0);
+      expect(digitAt(value, { position: 1 })).toBe(7);
+      expect(digitAt(value, { position: 1, longest: 9999 })).toBe(0);
     });
   });
 

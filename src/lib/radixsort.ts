@@ -1,3 +1,14 @@
+export interface RadixParams {
+  longest?: number;
+  position?: number;
+}
+
+export interface RadixBuckets {
+  longest: number;
+  negative: number[];
+  positive: number[];
+}
+
 /**
  * Sort an array of numbers using forward, most-significant-digit radix sort.
  * The implementation first casts every number to a 0-padded string, based on
@@ -28,7 +39,10 @@
  *
  * @see https://en.wikipedia.org/wiki/Radix_sort
  */
-function msdRadixSort(arr: number[], position = 0, longest = 0): number[] {
+function msdRadixSort(
+  arr: number[],
+  { longest = 0, position = 0 }: RadixParams = {}
+): number[] {
   // Strings are normalised to the longest value by this point. If position is
   // beyond the length of the first item, then we've descended as far as we
   // need, and the array is already sorted.
@@ -39,24 +53,23 @@ function msdRadixSort(arr: number[], position = 0, longest = 0): number[] {
   const buckets: Record<number, number[]> = {};
 
   arr.forEach((value) => {
-    const digit = digitAt(value, position, longest);
+    const digit = digitAt(value, { longest, position });
     buckets[digit] ??= [];
     buckets[digit].push(value);
   });
 
   return Object.values(buckets).flatMap((bucket) => {
-    return msdRadixSort(bucket, position + 1, longest);
+    return msdRadixSort(bucket, { longest, position: position + 1 });
   });
 }
 
 // TODO(mark 2026-11-21): doc
 export function radixsort(arr: number[]): number[] {
   const { longest, negative, positive } = toBuckets(arr);
-  const startPosition = 0;
 
   const sorted = [
-    ...msdRadixSort(negative, startPosition, longest).reverse(),
-    ...msdRadixSort(positive, startPosition, longest),
+    ...msdRadixSort(negative, { longest, position: 0 }).reverse(),
+    ...msdRadixSort(positive, { longest, position: 0 }),
   ];
 
   return sorted;
@@ -65,8 +78,7 @@ export function radixsort(arr: number[]): number[] {
 // TODO(mark 2026-11-21): doc
 export function digitAt(
   value: number,
-  position: number,
-  longest: number = 0,
+  { longest = 0, position = 0 }: RadixParams = {}
 ): number {
   if (!isFinite(value) || !value) {
     return 0;
@@ -77,14 +89,8 @@ export function digitAt(
   return Number(stringified.at(position) ?? 0);
 }
 
-export interface Buckets {
-  longest: number;
-  negative: number[];
-  positive: number[];
-}
-
 // TODO(mark 2026-11-21): doc
-export function toBuckets(arr: number[]): Buckets {
+export function toBuckets(arr: number[]): RadixBuckets {
   const negative: number[] = [];
   const positive: number[] = [];
   let longest = 0;
