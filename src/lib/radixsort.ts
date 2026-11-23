@@ -63,7 +63,12 @@ function msdRadixSort(
   });
 }
 
-// TODO(mark 2026-11-21): doc
+/**
+ * Radix sort an array per the bucketed values.
+ *
+ * @see msdRadixSort
+ * @see toBuckets
+ */
 export function radixsort(arr: number[]): number[] {
   const { longest, negative, positive } = toBuckets(arr);
 
@@ -75,7 +80,18 @@ export function radixsort(arr: number[]): number[] {
   return sorted;
 }
 
-// TODO(mark 2026-11-21): doc
+/**
+ * Retrieve the digit at a given position from a digit, given leading 0 padding.
+ *
+ * - Convert the digit to a string.
+ * - Pad it left per the longest number in the root array.
+ * - Return the digit at the given position.
+ *
+ * It's an opinionated - and probably wrong - choice by me that I return zero
+ * when given some odd value such as null, undefined, NaN, or Infinite.
+ *
+ * @see https://en.wikipedia.org/wiki/Radix_sort#Most_significant_digit,_forward_recursive
+ */
 export function digitAt(
   value: number,
   { longest = 0, position = 0 }: RadixParams = {}
@@ -89,7 +105,19 @@ export function digitAt(
   return Number(stringified.at(position) ?? 0);
 }
 
-// TODO(mark 2026-11-21): doc
+/**
+ * Break the array into positive and negative buckets, and figure out the
+ * longest number by count of digits.
+ *
+ * Radix sort is designed for positive numbers, so I handle negatives by
+ * inverting these and sorting them as positive. For that they have to be
+ * bucketed out.
+ *
+ * Since the most-significant digit method pads numbers with leading zeroes per
+ * the longest number, it's handy to find it here.
+ *
+ * @see https://en.wikipedia.org/wiki/Radix_sort#Most_significant_digit,_forward_recursive
+ */
 export function toBuckets(arr: number[]): RadixBuckets {
   const negative: number[] = [];
   const positive: number[] = [];
