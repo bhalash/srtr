@@ -28,69 +28,84 @@
  *
  * @see https://en.wikipedia.org/wiki/Radix_sort
  */
-function msdRadixSort(arr: string[], position: number = 0): string[] {
-  if (arr.length < 2 || position > arr[0].length) {
+function msdRadixSort(arr: number[], position = 0, longest = 0): number[] {
+  // Strings are normalised to the longest value by this point. If position is
+  // beyond the length of the first item, then we've descended as far as we
+  // need, and the array is already sorted.
+  if (arr.length < 2 || position > longest) {
     return arr;
   }
 
-  const buckets: Record<number, string[]> = {};
+  const buckets: Record<number, number[]> = {};
 
   arr.forEach((value) => {
-    const digit = digitAt(value, position);
+    const digit = digitAt(value, position, longest);
     buckets[digit] ??= [];
     buckets[digit].push(value);
   });
 
   return Object.values(buckets).flatMap((bucket) => {
-    return msdRadixSort(bucket, position + 1);
+    return msdRadixSort(bucket, position + 1, longest);
   });
 }
 
 // TODO(mark 2026-11-21): doc
 export function radixsort(arr: number[]): number[] {
-  return toNumbers(msdRadixSort(toStrings(arr)));
+  const { longest, negative, positive } = toBuckets(arr);
+  const startPosition = 0;
+
+  const sorted = [
+    ...msdRadixSort(negative, startPosition, longest).reverse(),
+    ...msdRadixSort(positive, startPosition, longest),
+  ];
+
+  return sorted;
 }
 
 // TODO(mark 2026-11-21): doc
-export function longestNumber(arr: number[]): number {
-  if (!arr.length) {
+export function digitAt(
+  value: number,
+  position: number,
+  longest: number = 0,
+): number {
+  if (!isFinite(value) || !value) {
     return 0;
   }
 
-  return arr.reduce((highest, value) => {
-    if (!isFinite(value) || !value) {
-      return 0;
-    }
+  // Use the absolute value because Radix sort works with positive numbers.
+  const stringified = String(Math.abs(value)).padStart(longest, '0');
+  return Number(stringified.at(position) ?? 0);
+}
 
-    const { length } = String(value);
+export interface Buckets {
+  longest: number;
+  negative: number[];
+  positive: number[];
+}
 
-    if (length > highest) {
-      return length;
+// TODO(mark 2026-11-21): doc
+export function toBuckets(arr: number[]): Buckets {
+  const negative: number[] = [];
+  const positive: number[] = [];
+  let longest = 0;
+
+  arr.forEach((value) => {
+    if (isFinite(value) && value) {
+      const stringified = String(value);
+
+      if (stringified.length > longest) {
+        longest = stringified.length;
+      }
     } else {
-      return highest;
-    }
-  }, 0);
-}
-
-// TODO(mark 2026-11-17): How to properly handle negative numbers?
-export function toStrings(arr: number[]): string[] {
-  const longest = longestNumber(arr);
-
-  return arr.map((value) => {
-    if (!isFinite(value) || !value) {
-      value = 0;
+      longest ||= 1;
     }
 
-    return String(Math.abs(value)).padStart(longest, '0');
+    if (value < 0) {
+      negative.push(value);
+    } else {
+      positive.push(value);
+    }
   });
-}
 
-// TODO(mark 2026-11-21): doc
-export function toNumbers(arr: string[]): number[] {
-  return arr.flat().map(Number);
-}
-
-// TODO(mark 2026-11-21): doc
-export function digitAt(value: string, position: number): number {
-  return Number(value.at(position) ?? 0);
+  return { longest, positive, negative };
 }
